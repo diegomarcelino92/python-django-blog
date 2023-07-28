@@ -1,0 +1,29 @@
+{
+  "python.terminal.activateEnvironment": true,
+  
+  "python.linting.enabled": true,
+  "python.linting.lintOnSave": true,
+
+  "python.formatting.autopep8Args": ["--indent-size=4", "--max-line-length=100"],
+  "python.formatting.provider": "autopep8",
+
+  "editor.tabSize": 4,
+  "editor.defaultFormatter": "ms-python.autopep8",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.unusedImports": true
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
+}

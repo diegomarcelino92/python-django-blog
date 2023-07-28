@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  django-blog:
+    container_name: django-blog
+    build: 
+      context: .
+      dockerfile: ./dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./project:/project
+      - ./data/static:/data/static
+      - ./data/media:/data/media
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13-alpine
+    volumes:
+      - ./data/database:/var/lib/postgres/data
+    env_file:
+      - ./.env
