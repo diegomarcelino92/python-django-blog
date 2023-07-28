@@ -23,8 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-print(settings)
-
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,
