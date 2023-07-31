@@ -2,8 +2,6 @@
 
 set -e
 
-echo "helooo $POSTGRES_HOST $POSTGRES_PORT"
-
 while ! nc -z $POSTGRES_HOST $POSTGRES_PORT; do
     echo "Waiting for PostgreSQL start..."
     sleep 2

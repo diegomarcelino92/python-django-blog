@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED 1
 ENV IMG_USER "dbuser"
 ENV PATH="/scripts:/venv/bin:$PATH"
 
+COPY ./apps /apps
 COPY ./project /project
 COPY ./scripts /scripts
 COPY ./requirements.txt /requirements.txt

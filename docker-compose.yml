@@ -10,6 +10,7 @@ services:
       - 8000:8000
     volumes:
       - ./project:/project
+      - ./apps:/apps
       - ./data/static:/data/static
       - ./data/media:/data/media
     env_file:
