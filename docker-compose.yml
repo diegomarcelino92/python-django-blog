@@ -19,8 +19,12 @@ services:
       - postgres
 
   postgres:
+    container_name: postgres
     image: postgres:13-alpine
     volumes:
-      - ./data/database:/var/lib/postgres/data
+      - postgres:/var/lib/postgresql/data:wr
     env_file:
       - ./.env
+
+volumes:
+  postgres: 
