@@ -1,9 +1,8 @@
 {
   "python.terminal.activateEnvironment": true,
-  "python.linting.pylintArgs": ["--load-plugins=pylint_django"],
+  "pylint.args": ["--load-plugins=pylint_django"],
   
   "autopep8.args": ["--indent-size=4", "--max-line-length=100"],
-
 
   "editor.tabSize": 4,
   "editor.defaultFormatter": "ms-python.autopep8",
