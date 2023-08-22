@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  {% include 'partials/_head.html' %}
+  {% block additional_head %}{% endblock additional_head %}
+</head>
+
+<body>
+  <div class="blog-wrapper">
+    {% if setup.show_header %}
+      {% include 'partials/_header.html' %}
+    {% endif %}
+
+    {% block content %}{% endblock content %}
+    
+    {% if setup.show_pagination %}
+      {% include 'partials/_pagination.html' %}
+    {% endif %}
+
+    {% if setup.show_footer %}
+      {% include 'partials/_footer.html' %}
+    {% endif %}
+  </div>
+</body>
+</html>
