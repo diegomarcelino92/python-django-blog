@@ -6,7 +6,7 @@
 
   --clr-whitest: var(--_clr-primary) 100%;
   --clr-white: var(--_clr-primary) 99%;
-  --clr-black: var(--_clr-primary) 2%;
+  --clr-black: var(--_clr-primary) 15%;
 
   --clr-primary-ltst: var(--_clr-primary) 80%;
   --clr-primary-ltr: var(--_clr-primary) 70%;
