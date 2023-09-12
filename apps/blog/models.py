@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django_summernote.models import AbstractAttachment
 
 from apps.utils.files import resize_image, upload_to
 from apps.utils.rands import custom_slugify
@@ -21,6 +22,9 @@ class Tag(models.Model):
             self.slug = custom_slugify(self.name)
 
         return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.name)
 
 
 class Category(models.Model):
@@ -46,7 +50,6 @@ class Page(models.Model):
     slug = models.SlugField(
         max_length=255, default=None,
         null=True, unique=True
-
     )
     content = models.TextField()
     is_published = models.BooleanField(default=False)
@@ -58,14 +61,23 @@ class Page(models.Model):
         return super().save(*args, **kwargs)
 
 
+class PostManager(models.Manager):
+    def get_published(self):
+        return self\
+            .filter(is_published=True)\
+            .order_by('-pk')
+
+
 class Post(models.Model):
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
 
+    objects = PostManager()
+
     title = models.CharField(max_length=65)
     slug = models.SlugField(
-        max_length=255, default=None,
+        max_length=255, default=None, blank=True,
         null=True, unique=True
     )
     cover = models.ImageField(upload_to=upload_to, blank=True, default=None)
@@ -94,6 +106,7 @@ class Post(models.Model):
             self.slug = custom_slugify(self.title, 4)
 
         current_cover = str(self.cover.name)
+        super().save(*args, **kwargs)
         cover_changed = False
 
         if self.cover:
@@ -102,4 +115,20 @@ class Post(models.Model):
         if cover_changed:
             resize_image(self.cover, 900)
 
-        return super().save(*args, **kwargs)
+    def __str__(self):
+        return str(self.title)
+
+
+class PostAttachment(AbstractAttachment):
+    def save(self, *args, **kwargs):
+        self.name = self.file.name
+        super().save(*args, **kwargs)
+
+        current_file = str(self.file.name)
+        file_changed = False
+
+        if self.file:
+            file_changed = current_file != self.file.name
+
+        if file_changed:
+            resize_image(self.file, 900)
