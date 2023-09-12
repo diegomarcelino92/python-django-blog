@@ -5,6 +5,7 @@
   "autopep8.args": ["--indent-size=4", "--max-line-length=100"],
   "python.analysis.indexing": true,
   "python.analysis.autoImportCompletions": true,
+  "python.defaultInterpreterPath": "./venv/bin/python",
   
   "editor.tabSize": 4,
   "editor.defaultFormatter": "ms-python.autopep8",
