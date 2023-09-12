@@ -28,7 +28,7 @@
         </p>
   
         <div class="card-actions">
-          <a class="card-action-link" href="{{ post.get_absolute_url }}">
+          <a class="card-action-link" href="{% url 'blog:post' post.slug %}">
             <span>Read</span>
             <i class="fa-solid fa-circle-arrow-right"></i>
           </a>
