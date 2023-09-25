@@ -1,9 +1,17 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django_summernote.models import AbstractAttachment
 
 from apps.utils.files import resize_image, upload_to
 from apps.utils.rands import custom_slugify
+
+
+class PostManager(models.Manager):
+    def get_published(self):
+        return (self
+                .filter(is_published=True)
+                .order_by('-pk'))
 
 
 class Tag(models.Model):
@@ -38,6 +46,9 @@ class Category(models.Model):
         null=True, unique=True
     )
 
+    def __str__(self):
+        return str(self.name)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = custom_slugify(self.name)
@@ -54,18 +65,21 @@ class Page(models.Model):
     content = models.TextField()
     is_published = models.BooleanField(default=False)
 
+    objects = PostManager()
+
+    def get_absolute_url(self):
+        if not self.is_published:
+            return reverse('blog:index')
+        return reverse('blog:page', args=(self.slug,))
+
+    def __str__(self):
+        return str(self.title)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = custom_slugify(self.title)
 
         return super().save(*args, **kwargs)
-
-
-class PostManager(models.Manager):
-    def get_published(self):
-        return self\
-            .filter(is_published=True)\
-            .order_by('-pk')
 
 
 class Post(models.Model):
@@ -91,15 +105,23 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, default='')
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL,
+    created_by = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL,
                                    null=True, blank=True, default=None,
                                    related_name='page_created_by'
                                    )
     updated_at = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL,
+    updated_by = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL,
                                    null=True, blank=True, default=None,
                                    related_name='page_updated_by'
                                    )
+
+    def get_absolute_url(self):
+        if not self.is_published:
+            return reverse('blog:index')
+        return reverse('blog:post', args=(self.slug,))
+
+    def __str__(self):
+        return str(self.title)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -114,9 +136,6 @@ class Post(models.Model):
 
         if cover_changed:
             resize_image(self.cover, 900)
-
-    def __str__(self):
-        return str(self.title)
 
 
 class PostAttachment(AbstractAttachment):
