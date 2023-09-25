@@ -1,8 +1,8 @@
 {
-  "python.terminal.activateEnvironment": true,
   "pylint.args": ["--load-plugins=pylint_django"],
-  
   "autopep8.args": ["--indent-size=4", "--max-line-length=100"],
+  
+  "python.terminal.activateEnvironment": true,
   "python.analysis.indexing": true,
   "python.analysis.autoImportCompletions": true,
   "python.defaultInterpreterPath": "./venv/bin/python",
