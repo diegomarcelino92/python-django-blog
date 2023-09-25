@@ -54,9 +54,9 @@
   /* Spacings */
   --spacing-micro: 0.8rem;
   --spacing-smlst: 1.5rem;
-  --spacing-smlr: 2rem;
-  --spacing-sm: 2.5rem;
-  --spacing-base: 3rem;
+  --spacing-smlr: 1.8rem;
+  --spacing-sm: 2.2rem;
+  --spacing-base: 2.5rem;
   --spacing-bg: 4rem;
   --spacing-bgr: 5rem;
   --spacing-bgst: 6rem;
@@ -235,7 +235,18 @@ html,
 }
 
 /* Header */
-.blog-title,
+.blog-title {
+  margin: 0;
+  font-size: var(--fs-bg);
+}
+
+.blog-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-base);
+}
+
 .blog-description {
   margin: 0;
 }
@@ -257,6 +268,11 @@ html,
 }
 
 /* Search */
+
+.search {
+  flex: 1;
+}
+
 .search-content {
   display: flex;
   align-items: center;
@@ -275,11 +291,12 @@ html,
   background-color: transparent;
   border: 2px solid hsl(var(--clr-gray-ltr));
   font-size: var(--fs-base);
-  padding: var(--spacing-smlst);
+  padding: var(--spacing-micro);
   padding-inline-end: calc(var(--spacing-base) + var(--spacing-micro));
   border-radius: var(--br-base);
   outline: none;
 }
+
 .search-input::placeholder {
   color: hsl(var(--clr-gray-ltr));
 }

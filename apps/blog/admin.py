@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.urls import reverse
-from django.utils.safestring import mark_safe
 from django_summernote.admin import SummernoteModelAdmin
 
 from apps.blog.models import Category, Page, Post, Tag
@@ -49,20 +47,11 @@ class PostAdmin(SummernoteModelAdmin):
     list_editable = 'is_published',
     readonly_fields = (
         'created_at', 'updated_at', 'created_by', 'updated_by',
-        'link',
     )
     ordering = '-id',
     list_per_page = 50
     prepopulated_fields = {"slug": ('title',), }
     autocomplete_fields = 'category', 'tags',
-
-    def link(self, obj):
-        if not obj.pk:
-            return '-'
-        post_url = reverse('blog:post', args=(obj.slug,))
-        post_link = f'<a href="{post_url}" target="_blank">Ver post</a>'
-        safe_link = mark_safe(post_link)
-        return safe_link
 
     def save_model(self, request, obj, _, change):
         if change:

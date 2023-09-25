@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %} 
+{% extends 'base.html' %} 
 
 {% block additional_head %}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css">
@@ -7,9 +7,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/python/python.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/javascript/javascript.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlmixed/htmlmixed.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/css/css.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/xml/xml.min.js"></script>
 {% endblock additional_head %}
 
 {% block content %}
@@ -42,8 +39,6 @@
               {% if post.created_by.first_name %}
                 {{ post.created_by.first_name }} 
                 {{ post.created_by.last_name }}
-              {% else %}
-                {{ post.created_by.username }}
               {% endif %}
             </span>
           </a>
@@ -61,7 +56,7 @@
           <div class="post-meta-item">
             <a 
               class="post-meta-link" 
-              href="{% url 'blog:category' post.category.slug  %}"
+              href="{% url 'blog:category' post.category.slug %}"
             >
               <i class="fa-solid fa-tag"></i>
               <span>
@@ -82,7 +77,7 @@
       <div class="single-post-content">
         {{ post.content | safe  }} 
       
-        {% if post.tags.exists %}
+       {% if post.tags.exists %}
           <div class="post-tags">
             <span>Tags: </span>
 
@@ -93,12 +88,43 @@
               </a>
             {% endfor %}
           </div>
-        {% endif %}
+        {% endif %} 
         
       </div>
-    
     </div>
   </div>
-</main>
 
+  <script>
+    (function () {
+      if (typeof CodeMirror == 'undefined') return;
+  
+      const codes = document.querySelectorAll('pre');
+  
+      for (const code of codes) {
+        const language = code.dataset.language || null;
+        const text = code.textContent || code.innerText;
+
+  
+        const config = {
+          value: text,
+          tabSize: 2,
+          mode: language,
+          theme: 'dracula',
+          lineNumbers: false,
+          styleActiveLine: true,
+          styleActiveSelected: true,
+          lineWrapping: false,
+          line: true,
+          readOnly: true,
+          viewportMargin: 50,
+          matchBrackets: true,
+        };
+  
+        const editor = CodeMirror(function (node) {
+          code.parentNode.replaceChild(node, code);
+        }, config);
+      }
+    })();
+  </script>
+</main>
 {% endblock content %}
