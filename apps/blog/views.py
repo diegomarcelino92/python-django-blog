@@ -10,17 +10,19 @@ def index(request: HttpRequest, slug=''):
     posts = Post.objects.get_published()
     page_title = 'Home'
 
+    tag_page = '/tag/'
+    category_page = '/category/'
+
     if slug:
-        if '/tag/' in request.path_info:
+        if tag_page in request.path_info:
             posts = posts.filter(tags__slug=slug)
-            posts[0].save()
             page_title = (posts[0]
                           .tags
                           .filter(slug=slug)
                           .first()
                           .name)
 
-        if '/category/' in request.path_info:
+        if category_page in request.path_info:
             posts = posts.filter(category__slug=slug)
             page_title = posts[0].category.name
 
