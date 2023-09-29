@@ -58,7 +58,7 @@
               class="post-meta-link" 
               href="{% url 'blog:category' post.category.slug %}"
             >
-              <i class="fa-solid fa-tag"></i>
+              <i class="fa-solid fa-link"></i>
               <span>
                 {{ post.category.name }}
               </span>
@@ -76,21 +76,21 @@
 
       <div class="single-post-content">
         {{ post.content | safe  }} 
-      
-       {% if post.tags.exists %}
-          <div class="post-tags">
-            <span>Tags: </span>
-
-            {% for tag in post.tags.all %}
-              <a class="post-tag-link" href="{% url 'blog:tag' tag.slug %}">
-                <i class="fa-solid fa-link"></i>
-                <span>{{ tag.name }}</span>
-              </a>
-            {% endfor %}
-          </div>
-        {% endif %} 
-        
       </div>
+
+      {% if post.tags.exists %}
+         <div class="post-tags">
+           <span>Tags: </span>
+
+           {% for tag in post.tags.all %}
+             <a class="post-tag-link" href="{% url 'blog:tag' tag.slug %}">
+               <i class="fa-solid fa-tag"></i>
+               <span>{{ tag.name }}</span>
+             </a>
+           {% endfor %}
+           
+         </div>
+       {% endif %} 
     </div>
   </div>
 

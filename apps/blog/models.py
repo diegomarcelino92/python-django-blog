@@ -25,14 +25,14 @@ class Tag(models.Model):
         null=True, unique=True
     )
 
+    def __str__(self):
+        return str(self.name)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = custom_slugify(self.name)
 
         return super().save(*args, **kwargs)
-
-    def __str__(self):
-        return str(self.name)
 
 
 class Category(models.Model):
@@ -67,13 +67,13 @@ class Page(models.Model):
 
     objects = PostManager()
 
+    def __str__(self):
+        return str(self.title)
+
     def get_absolute_url(self):
         if not self.is_published:
             return reverse('blog:index')
         return reverse('blog:page', args=(self.slug,))
-
-    def __str__(self):
-        return str(self.title)
 
     def save(self, *args, **kwargs):
         if not self.slug:

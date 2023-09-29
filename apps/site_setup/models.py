@@ -49,6 +49,9 @@ class SiteSetup(models.Model):
         validators=[validate_image]
     )
 
+    def __str__(self) -> str:
+        return self.title
+
     def save(self, *args, **kwargs):
         current_favicon_name = str(self.fav_icon.name)
         super().save(*args, **kwargs)
@@ -59,6 +62,3 @@ class SiteSetup(models.Model):
 
         if favicon_changed:
             resize_image(self.fav_icon, 32)
-
-    def __str__(self) -> str:
-        return self.title

@@ -8,51 +8,52 @@
         </h2>
         
         {% if setup.show_search %}
-           <div class="search center">
-             <form class="search-form" action="{% url 'blog:search' %}" method="get">
-               <div class="search-content">
-                 <label class="sr-only" id="search-label" for="search-input">Buscar</label>
-                 <input
-                   class="search-input"
-                   type="search"
-                   name="q"
-                   id="search-input"
-                   placeholder="Digite sua busca"
-                   value="{{ search_value }}"
-                   required
-                 >
-                 <button class="search-btn" type="submit" aria-labelledby="search-label">
-                   <i class="fa fa-search"></i>
-                 </button>
-               </div>
-             </form>
-           </div>
-         {% endif %}
-
-        {% if setup.show_menu %}
-        <nav class="menu">
-          <ul class="menu-items">
-            {% for link in setup.menulink_set.all %}
-            <li class="menu-item">
-              {% if link.new_tab %}
-              <a target="_blank" class="menu-link" href="{{ link.url_or_path }}">
-                {{ link.text }}
-              </a>
-              {% else %}
-              <a class="menu-link" href="{{ link.url_or_path }}">
-                {{ link.text }}
-              </a>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-        </nav>
+          <form class="search-form" action="{% url 'blog:search' %}" method="get">
+            <div class="search-content">
+              <label class="sr-only" id="search-label" for="search-input">Buscar</label>
+              <input
+              class="search-input"
+              type="search"
+              name="q"
+              id="search-input"
+              placeholder="Digite sua busca"
+              value="{{ search_value }}"
+              required
+              >
+              <button class="search-btn" type="submit" aria-labelledby="search-label">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </form>
         {% endif %}
-
       </div>
+      
+        {% if setup.show_description %}
+          <p class="blog-description center">{{ setup.description }}</p>
+        {% endif %}
+        
+        {% if setup.show_menu %}
+          <nav class="menu">
+            <ul class="menu-items">
+              {% for link in setup.menulink_set.all %}
+              <li class="menu-item">
+                {% if link.new_tab %}
+                <a target="_blank" class="menu-link" href="{{ link.url_or_path }}">
+                  {{ link.text }}
+                </a>
+                {% else %}
+                <a class="menu-link" href="{{ link.url_or_path }}">
+                  {{ link.text }}
+                </a>
+                {% endif %}
+              </li>
+              {% endfor %}
 
-      {% if setup.show_description %}
-        <p class="blog-description center">{{ setup.description }}</p>
-      {% endif %}
+              <li class='menu-item-space'><i class="fa-brands fa-facebook"></i></li>
+              <li><i class="fa-brands fa-instagram"></i></li>
+              <li><i class="fa-brands fa-twitter"></i></li>
+            </ul>
+          </nav>  
+        {% endif %}
     </div>
   </header>
