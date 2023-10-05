@@ -32,7 +32,7 @@
         <div class="post-meta-item">
           <a 
             class="post-meta-link" 
-            href="{% url 'blog:post' post.slug %}"
+            href="{% url 'blog:author' post.created_by.pk %}"
           >
             <i class="fa-solid fa-user"></i>
             <span>

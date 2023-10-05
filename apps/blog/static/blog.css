@@ -257,6 +257,7 @@ html,
 .blog-description {
   margin: 0;
   font-size: var(--fs-sm);
+  color: hsl(var(--clr-gray-base));
 }
 
 /* Menu */
