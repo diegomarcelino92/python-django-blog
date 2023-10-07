@@ -2,9 +2,11 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404, HttpRequest
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from apps.blog.models import Page, Post
+
+ITEMS_PER_PAGE = 9
 
 
 def index(request: HttpRequest, slug=''):
@@ -27,7 +29,7 @@ def index(request: HttpRequest, slug=''):
             posts = posts.filter(category__slug=slug)
             page_title = posts[0].category.name
 
-    paginator = Paginator(posts, 9)
+    paginator = Paginator(posts, ITEMS_PER_PAGE)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
 
@@ -40,6 +42,9 @@ def index(request: HttpRequest, slug=''):
 def search(request):
     search_value = request.GET.get('q', '').strip()
 
+    if not search_value:
+        return redirect('blog:index')
+
     search_filter = (
         Q(title__icontains=search_value) |
         Q(excerpt__icontains=search_value) |
@@ -48,12 +53,12 @@ def search(request):
 
     posts = (Post.objects
              .get_published()
-             .filter(search_filter))
+             .filter(search_filter))[:ITEMS_PER_PAGE]
 
     return render(request, 'pages/index.html', {
         'posts': posts,
         'search_value': search_value,
-        'page_title': search_value
+        'page_title': f'Busca - {search_value}'
     })
 
 
